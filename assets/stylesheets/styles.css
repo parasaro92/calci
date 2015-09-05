@@ -8,6 +8,9 @@ body {
   top: 50%;
   transform: translateY(-50%);
   margin: 0 auto; }
+  #calculator #keys ::selection, #calculator #operators ::selection {
+    background-color: transparent;
+    color: inherit; }
   #calculator #result {
     background-color: #F3F3F3;
     text-align: right;
