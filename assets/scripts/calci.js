@@ -23,6 +23,16 @@ var calculator = {
         calculator.handleInput(digit);
       });
     });
+
+    $(document).bind('keyup', '.' , function() {
+      lastNumber = calculator.getLastNumber();
+      if(lastNumber.indexOf('.') == -1) {
+        if(lastNumber.length == 0) {
+          calculator.handleInput(0);
+        }
+        calculator.handleInput('.');
+      }
+    });
     
     $(document).bind('keyup', 'backspace' ,function() {
         calculator.handleDelete();
@@ -58,6 +68,16 @@ var calculator = {
   
   clearResult: function() {
       $('#result').html('');
+  },
+  getLastNumber: function() {
+    str = $('#preview').html();
+    regexp = /[+\-*\/]?([0-9.])*$/
+    matches = str.match(regexp);
+    if(matches == null) {
+      return str;
+    } else {
+      return matches[0].slice(1);
+    }
   }
 }
 
