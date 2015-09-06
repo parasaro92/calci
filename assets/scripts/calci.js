@@ -1,8 +1,7 @@
+(function() {
 var calculator = {
-
   init: function() {
     $('#calculator .input').click(function() {
-
       if(this.dataset.keyType == "digit") {
         calculator.handleInput(this.dataset.digit);
       } else if (this.dataset.keyType == "operator") {
@@ -131,3 +130,4 @@ var calculator = {
 $(document).ready(function() {
   calculator.init();
 });
+})();
