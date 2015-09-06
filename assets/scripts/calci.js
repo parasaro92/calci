@@ -68,8 +68,7 @@ var calculator = {
         calculator.handleInput('-');
       }
     } else {
-      lastChar = calculator.getLastChar();
-      if(['+','-', '*', '/'].indexOf(lastChar) != -1) {
+      if(calculator.checkLastCharIsOperator()) {
         calculator.handleDelete();
       }
         calculator.handleInput(operator);
@@ -84,6 +83,9 @@ var calculator = {
   },
   
   evaluateResult: function() {
+      if(calculator.checkLastCharIsOperator()) {
+        calculator.handleDelete();
+      }
       $('#result').html(eval($('#preview').html()));
   },
   
@@ -117,6 +119,11 @@ var calculator = {
     } else {
     return str[str.length - 1];
     }
+  },
+  
+  checkLastCharIsOperator: function() {
+     lastChar = calculator.getLastChar();
+     return(['+','-', '*', '/'].indexOf(lastChar) != -1);
   }
 }
 
