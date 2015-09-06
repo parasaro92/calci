@@ -13,6 +13,7 @@ var calculator = {
         calculator.evaluateResult();
       }
     });
+    
 
     $('#calculator #delete').dblclick(function() {
         calculator.clearPreview();
