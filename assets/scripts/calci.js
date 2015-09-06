@@ -6,7 +6,7 @@ var calculator = {
       if(this.dataset.keyType == "digit") {
         calculator.handleInput(this.dataset.digit);
       } else if (this.dataset.keyType == "operator") {
-        calculator.handleInput(this.dataset.operator);
+        calculator.handleOperator(this.dataset.operator);
       } else if (this.dataset.keyType == "delete") {
         calculator.handleDelete();
       } else if (this.dataset.keyType == "equals") {
@@ -15,12 +15,19 @@ var calculator = {
     });
 
     $('#calculator #delete').dblclick(function() {
+        calculator.clearPreview();
         calculator.clearResult();
     });
 
     ['0','1','2','3','4','5','6','7','8','9','/','*','+','-'].forEach(function(digit) {
       $(document).bind('keyup', digit ,function() {
         calculator.handleInput(digit);
+      });
+    });
+
+    ['/','*','+','-'].forEach(function(digit) {
+      $(document).bind('keyup', digit ,function() {
+        calculator.handleOperator(digit);
       });
     });
 
@@ -38,7 +45,7 @@ var calculator = {
         calculator.handleDelete();
       });
     $(document).bind('keyup', 'shift+=' ,function() {
-        calculator.handleInput('+');
+        calculator.handleOperator('+');
       });
     ['=','return'].forEach(function(key) {
     $(document).bind('keyup', key ,function() {
@@ -53,6 +60,20 @@ var calculator = {
   */
   handleInput: function(input) {
     $('#preview').html($('#preview').html() + input);
+  },
+
+   handleOperator: function(operator) {
+    if($('#preview').html().length == 0) {
+      if(operator == '-') {
+        calculator.handleInput('-');
+      }
+    } else {
+      lastChar = calculator.getLastChar();
+      if(['+','-', '*', '/'].indexOf(lastChar) != -1) {
+        calculator.handleDelete();
+      }
+        calculator.handleInput(operator);
+      }
   },
   
   handleDelete: function() {
@@ -69,6 +90,15 @@ var calculator = {
   clearResult: function() {
       $('#result').html('');
   },
+
+  clearPreview: function() {
+      $('#preview').html('');
+  },
+
+  clearPreview: function() {
+      $('#preview').html('');
+  },
+
   getLastNumber: function() {
     str = $('#preview').html();
     regexp = /[+\-*\/]?([0-9.])*$/
@@ -76,7 +106,16 @@ var calculator = {
     if(matches == null) {
       return str;
     } else {
-      return matches[0].slice(1);
+      return  matches[0].slice(1);
+    }
+  },
+
+  getLastChar: function() {
+    str = $('#preview').html();
+    if(str.length == 0) {
+      return str;
+    } else {
+    return str[str.length - 1];
     }
   }
 }
