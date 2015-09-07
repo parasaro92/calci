@@ -19,7 +19,7 @@ var calculator = {
         calculator.clearResult();
     });
 
-    ['0','1','2','3','4','5','6','7','8','9','/','*','+','-'].forEach(function(digit) {
+    ['0','1','2','3','4','5','6','7','8','9'].forEach(function(digit) {
       $(document).bind('keyup', digit ,function() {
         calculator.handleInput(digit);
       });
@@ -65,14 +65,23 @@ var calculator = {
    handleOperator: function(operator) {
     if($('#preview').html().length == 0) {
       if(operator == '-') {
-        calculator.handleInput('-');
+        if (calculator.checkLastCharIsMinus() == '-') {
+          return;
+        } else {
+          calculator.handleInput('-');
+        }
       }
     } else {
-      if(calculator.checkLastCharIsOperator()) {
+      if(calculator.checkLastCharIsMinus()) {
         calculator.handleDelete();
       }
         calculator.handleInput(operator);
-      }
+    }
+  },
+  checkLastCharIsMinus: function() {
+    if(calculator.getLastChar == '-') {
+      return calculator.getLastChar();
+    }
   },
   
   handleDelete: function() {
@@ -125,7 +134,7 @@ var calculator = {
      lastChar = calculator.getLastChar();
      return(['+','-', '*', '/'].indexOf(lastChar) != -1);
   }
-}
+};
 
 $(document).ready(function() {
   calculator.init();
