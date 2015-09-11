@@ -25,7 +25,7 @@ var calculator = {
       });
     });
 
-    ['/','*','+','-'].forEach(function(digit) {
+    ['/','*','+','-','%','^'].forEach(function(digit) {
       $(document).bind('keyup', digit ,function() {
         calculator.handleOperator(digit);
       });
@@ -47,7 +47,11 @@ var calculator = {
     $(document).bind('keyup', 'shift+=' ,function() {
         calculator.handleOperator('+');
       });
-    ['=','return'].forEach(function(key) {
+
+    $(document).bind('keyup', 'c' ,function() {
+        calculator.handleOperator('c');
+      });
+    ['=','return','%'].forEach(function(key) {
     $(document).bind('keyup', key ,function() {
         calculator.evaluateResult();
       });
@@ -62,26 +66,46 @@ var calculator = {
     $('#preview').html($('#preview').html() + input);
   },
 
-   handleOperator: function(operator) {
-    if($('#preview').html().length == 0) {
+  handleOperator: function(operator) {
+    if (operator == 'c') {
+      calculator.clearResult();
+      calculator.clearPreview();
+    } else if($('#preview').html().length == 0) {
       if(operator == '-') {
-        if (calculator.checkLastCharIsMinus() == '-') {
+        calculator.handleInput('-');
+      }
+    } else if(operator == '-') {
+        if (calculator.checkLastCharIsMinus()) {
           return;
         } else {
           calculator.handleInput('-');
         }
-      }
-    } else {
-      if(calculator.checkLastCharIsMinus()) {
+    } else if (operator == '^') {
+        calculator.handleInput(operator);
+    } else if (operator == "!") {
+        calculator.factorial();
+        return;
+    }
+    else {
+        if(calculator.checkLastCharIsOperator()) {
         calculator.handleDelete();
       }
-        calculator.handleInput(operator);
+      calculator.handleInput(operator);
     }
   },
-  checkLastCharIsMinus: function() {
-    if(calculator.getLastChar == '-') {
-      return calculator.getLastChar();
+
+  factorial: function() {
+    var last = $('#preview').html();
+    var fact = 1;
+    for (var i=1; i <= last; i++) {
+      fact = fact * i;
     }
+    $('#preview').html(fact);
+    $('#result').html(fact);
+  },
+
+  checkLastCharIsMinus: function() {
+    return calculator.getLastChar() == '-' ;
   },
   
   handleDelete: function() {
@@ -90,15 +114,23 @@ var calculator = {
         calculator.clearResult();
       }
   },
+
+  hasPowerOperator: function() {
+    return ($('#preview').html().match(/\^/) != null)
+  },
   
   evaluateResult: function() {
-      if(calculator.checkLastCharIsOperator()) {
+      if(calculator.hasPowerOperator()) {
+        var nums = $('#preview').html().split("^");
+        $('#preview').html(Math.pow(parseInt(nums[0]), parseInt(nums[1])));
+      } else if(calculator.checkLastCharIsOperator()) {
         calculator.handleDelete();
-      }
+      } 
       $('#result').html(eval($('#preview').html()));
   },
   
   clearResult: function() {
+        
       $('#result').html('');
   },
 
@@ -132,7 +164,7 @@ var calculator = {
   
   checkLastCharIsOperator: function() {
      lastChar = calculator.getLastChar();
-     return(['+','-', '*', '/'].indexOf(lastChar) != -1);
+     return(['+','-', '*', '/','%','^','!'].indexOf(lastChar) != -1);
   }
 };
 
