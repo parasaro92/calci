@@ -100,7 +100,7 @@ var calculator = {
     for (var i=1; i <= last; i++) {
       fact = fact * i;
     }
-    $('#preview').html(fact);
+    $('#preview').html();
     $('#result').html(fact);
   },
 

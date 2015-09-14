@@ -1,10 +1,10 @@
 body {
   height: 100vh;
   font-family: 'Roboto', sans-serif; 
-  height: 100vmin;
+  height: 150vmin;
   background-image: url("/home/paras/Pictures/05.jpg");
-  background-repeat: repeat;
-
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #calculator {
@@ -13,24 +13,18 @@ body {
   top: 50%;
   transform: translateY(-50%);
   margin: 0 auto; }
-<<<<<<< HEAD
-  #calculator #keys ::selection, #calculator #operators ::selection {
-    background-color: transparent;
-    color: inherit; }
-=======
   
   #calculator #keys ::selection, #calculator#operators ::selection {
     background-color: transparent;
     color: inherit; }
 
->>>>>>> develop
   #calculator #result {
-    background-color: #F3F3F3;
-    text-align: right;
+    background-color: #1800ff;
     padding-right: 2vmin;
-    font-size: 14vmin;
+    font-size: 12vmin;
     font-weight: 100;
-    height: 20vmin;
+    text-align: right;
+    height: 20.8vmin;
     line-height: 20.8vmin; }
 
   #calculator #preview {
@@ -40,7 +34,7 @@ body {
     font-weight: 100;
     text-align: right;
     height: 11vmin;
-    line-height: 11.2vmin; }
+    line-height: 10.2vmin; }
   
   #calculator #keys {
     text-align: center; }
