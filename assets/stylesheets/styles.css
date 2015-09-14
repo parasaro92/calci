@@ -19,7 +19,7 @@ body {
     color: inherit; }
 
   #calculator #result {
-    background-color: #1800ff;
+    background-color: white;
     padding-right: 2vmin;
     font-size: 12vmin;
     font-weight: 100;
